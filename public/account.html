@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Личный кабинет — ISA LUX</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    body { padding-top: var(--header-h); background: var(--off-white); }
+    .page-hero { background: var(--black); padding: 40px 0 28px; border-bottom: 1px solid rgba(201,168,76,0.15); }
+    .page-hero h1 { color: var(--white); font-size: 1.6rem; }
+    .page-hero p { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 4px; }
+    .account-grid { display: grid; grid-template-columns: 260px 1fr; gap: 24px; margin-top: 32px; }
+    @media(max-width:768px) { .account-grid { grid-template-columns: 1fr; } }
+    .sidebar-card { background: var(--white); border-radius: var(--radius-xl); padding: 24px; box-shadow: var(--shadow-sm); height: fit-content; }
+    .user-avatar { width: 64px; height: 64px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; font-weight: 700; color: var(--black); margin-bottom: 12px; }
+    .user-name { font-weight: 700; font-size: 1rem; }
+    .user-role { font-size: 0.78rem; color: var(--gray-500); margin-top: 2px; }
+    .nav-menu { margin-top: 20px; display: flex; flex-direction: column; gap: 2px; }
+    .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: var(--radius-md); font-size: 0.88rem; cursor: pointer; transition: var(--transition); color: var(--gray-700); }
+    .nav-item:hover, .nav-item.active { background: var(--off-white); color: var(--black); font-weight: 600; }
+    .nav-item .nav-icon { font-size: 1rem; width: 20px; text-align: center; }
+    .content-card { background: var(--white); border-radius: var(--radius-xl); padding: 28px; box-shadow: var(--shadow-sm); }
+    .order-item { border: 1px solid var(--gray-100); border-radius: var(--radius-lg); padding: 16px; margin-bottom: 12px; }
+    .order-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .order-num { font-weight: 700; font-size: 0.9rem; }
+    .order-date { font-size: 0.78rem; color: var(--gray-500); }
+    .order-status { font-size: 0.75rem; font-weight: 700; padding: 3px 10px; border-radius: 50px; }
+    .status-new { background: #dbeafe; color: #1d4ed8; }
+    .status-confirmed { background: #d1fae5; color: #065f46; }
+    .status-processing { background: #fef3c7; color: #92400e; }
+    .status-delivered { background: #d1fae5; color: #065f46; }
+    .status-cancelled { background: #fee2e2; color: #991b1b; }
+    .empty-state { text-align: center; padding: 60px 24px; color: var(--gray-500); }
+    .empty-state .empty-icon { font-size: 3rem; margin-bottom: 16px; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+  </style>
+</head>
+<body>
+<div id="header-placeholder"></div>
+
+<div class="page-hero">
+  <div class="container">
+    <h1>Личный кабинет</h1>
+    <p id="user-greeting">Добро пожаловать!</p>
+  </div>
+</div>
+
+<section style="padding: 32px 0 80px">
+  <div class="container">
+    <div class="account-grid">
+
+      <!-- Sidebar -->
+      <div class="sidebar-card">
+        <div class="user-avatar" id="user-avatar">?</div>
+        <div class="user-name" id="user-name">Загрузка...</div>
+        <div class="user-role" id="user-role"></div>
+        <nav class="nav-menu">
+          <div class="nav-item active" data-tab="orders">
+            <span class="nav-icon">📦</span> Мои заказы
+          </div>
+          <div class="nav-item" data-tab="profile">
+            <span class="nav-icon">👤</span> Профиль
+          </div>
+          <div class="nav-item" data-tab="wholesale" id="wholesale-tab" style="display:none">
+            <span class="nav-icon">🏭</span> Оптовый статус
+          </div>
+          <div class="nav-item" onclick="logout()" style="margin-top:16px;color:var(--error)">
+            <span class="nav-icon">🚪</span> Выйти
+          </div>
+        </nav>
+      </div>
+
+      <!-- Content -->
+      <div>
+
+        <!-- Orders Tab -->
+        <div class="content-card tab-content active" id="tab-orders">
+          <h2 style="font-size:1.1rem;margin-bottom:20px">Мои заказы</h2>
+          <div id="orders-list"><div class="empty-state"><div class="empty-icon">⏳</div><p>Загрузка заказов...</p></div></div>
+        </div>
+
+        <!-- Profile Tab -->
+        <div class="content-card tab-content" id="tab-profile">
+          <h2 style="font-size:1.1rem;margin-bottom:20px">Мой профиль</h2>
+          <form id="profile-form" style="display:grid;gap:16px;max-width:460px">
+            <div class="form-group">
+              <label class="form-label">Имя</label>
+              <input type="text" class="form-control" id="p-name">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" id="p-email" disabled style="background:var(--off-white)">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Телефон</label>
+              <input type="tel" class="form-control" id="p-phone">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Компания</label>
+              <input type="text" class="form-control" id="p-company">
+            </div>
+            <button type="submit" class="btn btn-gold" style="width:fit-content">Сохранить</button>
+          </form>
+        </div>
+
+        <!-- Wholesale Tab -->
+        <div class="content-card tab-content" id="tab-wholesale">
+          <h2 style="font-size:1.1rem;margin-bottom:20px">Оптовый статус</h2>
+          <div id="wholesale-info"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<div id="toast-container"></div>
+<script type="module">
+  import { initPage, api, toast, getUser } from '/js/app.js';
+  import '/js/i18n.js';
+  await initPage();
+
+  const user = getUser();
+  if (!user) { window.location.href = '/login'; }
+
+  // Fill user info
+  document.getElementById('user-avatar').textContent = user.name?.charAt(0)?.toUpperCase() || '?';
+  document.getElementById('user-name').textContent = user.name || '';
+  document.getElementById('user-greeting').textContent = `Добро пожаловать, ${user.name}!`;
+  const roles = { retail: 'Розничный покупатель', wholesale: 'Оптовый клиент', distributor: 'Дистрибьютор', admin: 'Администратор' };
+  document.getElementById('user-role').textContent = roles[user.role] || user.role;
+
+  if (user.role === 'wholesale' || user.role === 'distributor') {
+    document.getElementById('wholesale-tab').style.display = 'flex';
+  }
+
+  // Fill profile form
+  document.getElementById('p-name').value = user.name || '';
+  document.getElementById('p-email').value = user.email || '';
+  document.getElementById('p-phone').value = user.phone || '';
+  document.getElementById('p-company').value = user.company || '';
+
+  // Tab switching
+  document.querySelectorAll('.nav-item[data-tab]').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      item.classList.add('active');
+      document.getElementById('tab-' + item.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Load orders
+  async function loadOrders() {
+    try {
+      const orders = await api('GET', '/api/orders/my');
+      const container = document.getElementById('orders-list');
+      if (!orders?.length) {
+        container.innerHTML = `<div class="empty-state"><div class="empty-icon">📦</div><h3>Заказов пока нет</h3><p style="margin-top:8px">Перейдите в каталог чтобы сделать первый заказ</p><a href="/catalog" class="btn btn-gold" style="margin-top:16px;display:inline-block">Перейти в каталог</a></div>`;
+        return;
+      }
+      const statusMap = { new:'Новый', confirmed:'Подтверждён', processing:'В обработке', shipped:'Отправлен', delivered:'Доставлен', cancelled:'Отменён' };
+      container.innerHTML = orders.map(o => `
+        <div class="order-item">
+          <div class="order-header">
+            <div>
+              <div class="order-num">${o.order_number || 'Заказ'}</div>
+              <div class="order-date">${new Date(o.created_at).toLocaleDateString('ru-RU', {day:'numeric',month:'long',year:'numeric'})}</div>
+            </div>
+            <span class="order-status status-${o.status}">${statusMap[o.status] || o.status}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:0.85rem;color:var(--gray-600)">
+            <span>Товаров: ${o.items_count || '—'}</span>
+            <span style="font-weight:700;color:var(--black)">${Number(o.total).toLocaleString('ru')} ₸</span>
+          </div>
+        </div>`).join('');
+    } catch {
+      document.getElementById('orders-list').innerHTML = `<div class="empty-state"><p>Не удалось загрузить заказы</p></div>`;
+    }
+  }
+
+  loadOrders();
+
+  window.logout = async () => {
+    await api('POST', '/api/auth/logout');
+    localStorage.removeItem('isa_token');
+    localStorage.removeItem('isa_user');
+    window.location.href = '/';
+  };
+</script>
+</body>
+</html>

@@ -446,6 +446,13 @@ app.get('/api/admin/stats', adminMiddleware, async (req, res) => {
   });
 });
 
+// ── Contact form ──────────────────────────────────────────────
+app.post('/api/contact', async (req, res) => {
+  const { name, phone, subject, message } = req.body;
+  await sendTelegram(`📩 <b>Сообщение с сайта!</b>\n👤 ${name}\n📱 ${phone || '-'}\n📌 ${subject || '-'}\n💬 ${message}`);
+  res.json({ ok: true });
+});
+
 // ── SPA fallback pages ────────────────────────────────────────
 const pages = ['catalog', 'product', 'cart', 'checkout', 'login', 'register', 'account', 'wholesale', 'delivery', 'contacts', 'about'];
 pages.forEach(page => {

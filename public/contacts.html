@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Контакты — ISA LUX</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    body { padding-top: var(--header-h); background: var(--off-white); }
+    .page-hero { background: var(--black); padding: 48px 0 32px; border-bottom: 1px solid rgba(201,168,76,0.15); }
+    .page-hero h1 { color: var(--white); font-size: 2rem; margin-bottom: 8px; }
+    .page-hero p { color: rgba(255,255,255,0.5); font-size: 0.9rem; }
+    .contacts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin: 40px 0; }
+    @media(max-width:768px) { .contacts-grid { grid-template-columns: 1fr; } }
+    .contact-card { background: var(--white); border-radius: var(--radius-xl); padding: 32px; box-shadow: var(--shadow-sm); }
+    .contact-item { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 24px; }
+    .contact-item:last-child { margin-bottom: 0; }
+    .contact-icon { width: 44px; height: 44px; background: var(--black); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+    .contact-label { font-size: 0.78rem; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+    .contact-value { font-size: 1rem; font-weight: 600; color: var(--black); }
+    .contact-value a { color: var(--black); text-decoration: none; }
+    .contact-value a:hover { color: var(--gold); }
+    .messengers { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
+    .messenger-btn { display: flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: var(--radius-md); font-weight: 600; font-size: 0.88rem; text-decoration: none; transition: var(--transition); }
+    .messenger-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .btn-whatsapp { background: #25D366; color: white; }
+    .btn-telegram { background: #0088cc; color: white; }
+    .btn-instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: white; }
+    .work-hours { background: var(--white); border-radius: var(--radius-xl); padding: 32px; box-shadow: var(--shadow-sm); }
+    .hours-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--gray-100); font-size: 0.9rem; }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-day { color: var(--gray-600); }
+    .hours-time { font-weight: 600; color: var(--black); }
+    .hours-time.closed { color: var(--gray-400); }
+  </style>
+</head>
+<body>
+<div id="header-placeholder"></div>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Главная</a><span>›</span>
+      <span class="current">Контакты</span>
+    </div>
+    <h1>Контакты</h1>
+    <p>Мы всегда рады помочь вам</p>
+  </div>
+</div>
+
+<section style="padding: 40px 0 80px">
+  <div class="container">
+    <div class="contacts-grid">
+
+      <!-- Контактная информация -->
+      <div class="contact-card">
+        <h2 style="font-size:1.2rem;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid var(--gold);display:inline-block">Свяжитесь с нами</h2>
+
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="contact-label">Телефон</div>
+            <div class="contact-value"><a href="tel:+77770000000">+7 777 000 00 00</a></div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <div>
+            <div class="contact-label">Email</div>
+            <div class="contact-value"><a href="mailto:info@isalux.kz">info@isalux.kz</a></div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-label">Адрес</div>
+            <div class="contact-value">г. Алматы, Казахстан</div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">🏢</div>
+          <div>
+            <div class="contact-label">Компания</div>
+            <div class="contact-value">ТОО «ISA LUX»</div>
+          </div>
+        </div>
+
+        <div class="messengers">
+          <a href="https://wa.me/77770000000" class="messenger-btn btn-whatsapp" target="_blank">
+            💬 WhatsApp
+          </a>
+          <a href="https://t.me/isalux" class="messenger-btn btn-telegram" target="_blank">
+            ✈️ Telegram
+          </a>
+          <a href="https://instagram.com/isalux.kz" class="messenger-btn btn-instagram" target="_blank">
+            📸 Instagram
+          </a>
+        </div>
+      </div>
+
+      <!-- График работы -->
+      <div class="work-hours">
+        <h2 style="font-size:1.2rem;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid var(--gold);display:inline-block">График работы</h2>
+
+        <div class="hours-row">
+          <span class="hours-day">Понедельник</span>
+          <span class="hours-time">09:00 — 20:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Вторник</span>
+          <span class="hours-time">09:00 — 20:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Среда</span>
+          <span class="hours-time">09:00 — 20:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Четверг</span>
+          <span class="hours-time">09:00 — 20:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Пятница</span>
+          <span class="hours-time">09:00 — 20:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Суббота</span>
+          <span class="hours-time">10:00 — 18:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Воскресенье</span>
+          <span class="hours-time closed">Выходной</span>
+        </div>
+
+        <div style="margin-top:24px;padding:16px;background:var(--off-white);border-radius:var(--radius-md)">
+          <p style="font-size:0.82rem;color:var(--gray-600)">
+            💡 Заказы через сайт принимаются круглосуточно. Обработка заказов в рабочее время.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Форма обратной связи -->
+    <div style="background:var(--white);border-radius:var(--radius-xl);padding:40px;box-shadow:var(--shadow-sm)">
+      <h2 style="font-size:1.3rem;margin-bottom:8px">Написать нам</h2>
+      <p style="color:var(--gray-600);font-size:0.88rem;margin-bottom:24px">Оставьте сообщение и мы свяжемся с вами в течение 1 рабочего часа</p>
+      <form id="contact-form" style="display:grid;gap:16px;max-width:560px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="form-group">
+            <label class="form-label">Ваше имя</label>
+            <input type="text" class="form-control" id="c-name" placeholder="Алибек" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Телефон</label>
+            <input type="tel" class="form-control" id="c-phone" placeholder="+7 777 000 00 00">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Тема</label>
+          <input type="text" class="form-control" id="c-subject" placeholder="Вопрос по заказу">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Сообщение</label>
+          <textarea class="form-control" id="c-message" rows="4" placeholder="Ваш вопрос или пожелание..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-gold" style="width:fit-content;padding:14px 32px">Отправить сообщение</button>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<div id="toast-container"></div>
+<script type="module">
+  import { initPage, toast } from '/js/app.js';
+  import '/js/i18n.js';
+  await initPage();
+
+  document.getElementById('contact-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type=submit]');
+    btn.disabled = true;
+    btn.textContent = 'Отправка...';
+
+    // Send via Telegram
+    const name = document.getElementById('c-name').value;
+    const phone = document.getElementById('c-phone').value;
+    const subject = document.getElementById('c-subject').value;
+    const message = document.getElementById('c-message').value;
+
+    try {
+      await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, phone, subject, message })
+      });
+      toast('Сообщение отправлено! Мы свяжемся с вами.', 'success');
+      e.target.reset();
+    } catch {
+      toast('Ошибка отправки. Позвоните нам напрямую.', 'error');
+    }
+    btn.disabled = false;
+    btn.textContent = 'Отправить сообщение';
+  });
+</script>
+</body>
+</html>

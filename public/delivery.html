@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Доставка — ISA LUX</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    body { padding-top: var(--header-h); background: var(--off-white); }
+    .page-hero { background: var(--black); padding: 48px 0 32px; border-bottom: 1px solid rgba(201,168,76,0.15); }
+    .page-hero h1 { color: var(--white); font-size: 2rem; margin-bottom: 8px; }
+    .page-hero p { color: rgba(255,255,255,0.5); font-size: 0.9rem; }
+    .delivery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin: 40px 0; }
+    .delivery-card { background: var(--white); border-radius: var(--radius-xl); padding: 32px; box-shadow: var(--shadow-sm); border: 1px solid var(--gray-100); }
+    .delivery-icon { font-size: 2.5rem; margin-bottom: 16px; }
+    .delivery-card h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--black); }
+    .delivery-card p { color: var(--gray-600); font-size: 0.88rem; line-height: 1.6; }
+    .delivery-card .price-tag { display: inline-block; margin-top: 12px; background: var(--gold); color: var(--black); font-weight: 700; font-size: 0.82rem; padding: 4px 12px; border-radius: 50px; }
+    .delivery-card .free-tag { background: #22c55e; color: white; }
+    .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; color: var(--black); }
+    .section-sub { color: var(--gray-600); font-size: 0.9rem; margin-bottom: 32px; }
+    .info-block { background: var(--white); border-radius: var(--radius-xl); padding: 32px; box-shadow: var(--shadow-sm); margin-bottom: 24px; }
+    .info-block h3 { font-size: 1rem; font-weight: 700; margin-bottom: 16px; color: var(--black); border-bottom: 2px solid var(--gold); padding-bottom: 8px; display: inline-block; }
+    .info-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .info-list li { display: flex; gap: 12px; align-items: flex-start; font-size: 0.88rem; color: var(--gray-700); }
+    .info-list li::before { content: '✓'; color: var(--gold); font-weight: 700; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+<div id="header-placeholder"></div>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Главная</a><span>›</span>
+      <span class="current">Доставка</span>
+    </div>
+    <h1>Доставка и оплата</h1>
+    <p>Быстрая доставка по Алматы и всему Казахстану</p>
+  </div>
+</div>
+
+<section style="padding: 40px 0 80px">
+  <div class="container">
+
+    <!-- Алматы -->
+    <div class="section-title">🏙️ Доставка по Алматы</div>
+    <div class="section-sub">Доставляем в день заказа или на следующий день</div>
+
+    <div class="delivery-grid">
+      <div class="delivery-card">
+        <div class="delivery-icon">🚚</div>
+        <h3>Наша доставка</h3>
+        <p>Собственная курьерская служба. Доставка в течение 2-4 часов после подтверждения заказа. Крупногабаритные заказы.</p>
+        <span class="price-tag">от 500 ₸</span>
+        <span class="price-tag free-tag" style="margin-left:6px">Бесплатно от 15 000 ₸</span>
+      </div>
+      <div class="delivery-card">
+        <div class="delivery-icon">🟡</div>
+        <h3>Яндекс Доставка</h3>
+        <p>Быстрая доставка через Яндекс. Отслеживание в реальном времени. Доставка за 1-2 часа в пределах города.</p>
+        <span class="price-tag">по тарифу Яндекс</span>
+      </div>
+      <div class="delivery-card">
+        <div class="delivery-icon">🟢</div>
+        <h3>Glovo</h3>
+        <p>Экспресс-доставка через Glovo. Заказывайте прямо в приложении или через наш сайт.</p>
+        <span class="price-tag">по тарифу Glovo</span>
+      </div>
+      <div class="delivery-card">
+        <div class="delivery-icon">🔵</div>
+        <h3>Wolt</h3>
+        <p>Доставка через сервис Wolt. Быстро и удобно — курьер привезёт ваш заказ прямо к двери.</p>
+        <span class="price-tag">по тарифу Wolt</span>
+      </div>
+    </div>
+
+    <!-- Регионы -->
+    <div class="section-title" style="margin-top:16px">🇰🇿 Доставка по Казахстану</div>
+    <div class="section-sub">Работаем с ведущими транспортными компаниями</div>
+
+    <div class="delivery-grid">
+      <div class="delivery-card">
+        <div class="delivery-icon">📦</div>
+        <h3>СДЭК</h3>
+        <p>Доставка в любой город Казахстана. Сроки 2-5 рабочих дней. Есть пункты выдачи во всех крупных городах.</p>
+        <span class="price-tag">по тарифу СДЭК</span>
+      </div>
+      <div class="delivery-card">
+        <div class="delivery-icon">🚛</div>
+        <h3>Almex</h3>
+        <p>Казахстанская транспортная компания. Доставка грузов по всему Казахстану. Подходит для крупных оптовых заказов.</p>
+        <span class="price-tag">по тарифу Almex</span>
+      </div>
+      <div class="delivery-card">
+        <div class="delivery-icon">🐴</div>
+        <h3>Pony Express</h3>
+        <p>Надёжная курьерская доставка. Работают по всему Казахстану. Страхование груза включено.</p>
+        <span class="price-tag">по тарифу Pony Express</span>
+      </div>
+      <div class="delivery-card">
+        <div class="delivery-icon">🏪</div>
+        <h3>Самовывоз</h3>
+        <p>Заберите заказ самостоятельно со склада в Алматы. Адрес уточняется при подтверждении заказа. Бесплатно.</p>
+        <span class="price-tag free-tag">Бесплатно</span>
+      </div>
+    </div>
+
+    <!-- Оплата -->
+    <div class="section-title" style="margin-top:16px">💳 Способы оплаты</div>
+    <div class="section-sub">Удобные и безопасные способы оплаты</div>
+
+    <div class="info-block">
+      <ul class="info-list">
+        <li><strong>Kaspi Pay</strong> — оплата через приложение Kaspi или QR-код</li>
+        <li><strong>Halyk Bank</strong> — перевод на карту или через Homebank</li>
+        <li><strong>Forte Bank</strong> — оплата через приложение Forte</li>
+        <li><strong>ePay</strong> — оплата банковской картой онлайн (Visa, Mastercard)</li>
+        <li><strong>Наличные</strong> — оплата курьеру при получении</li>
+        <li><strong>Безналичный расчёт</strong> — для юридических лиц по счёт-фактуре</li>
+      </ul>
+    </div>
+
+    <!-- Условия -->
+    <div class="section-title" style="margin-top:16px">ℹ️ Важная информация</div>
+    <div class="info-block">
+      <ul class="info-list">
+        <li>Заказы принимаются ежедневно с 9:00 до 20:00</li>
+        <li>Доставка по Алматы осуществляется в день заказа при оформлении до 15:00</li>
+        <li>При получении проверяйте комплектность и целостность товара</li>
+        <li>Претензии по качеству принимаются в течение 14 дней</li>
+        <li>Оптовые заказы от 250 000 ₸ — доставка по Алматы бесплатно</li>
+        <li>По вопросам доставки звоните: <strong>+7 777 000 00 00</strong></li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<script type="module">
+  import { initPage } from '/js/app.js';
+  import '/js/i18n.js';
+  await initPage();
+</script>
+</body>
+</html>
