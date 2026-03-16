@@ -207,18 +207,20 @@
   // Load categories
   async function loadCategories() {
     const cats = await api('GET', '/api/categories');
+    const lang = window.i18n?.getLang() || 'ru';
+    const n = obj => obj[`name_${lang}`] || obj.name_ru;
     const container = document.getElementById('cat-filters');
     container.innerHTML = cats.map(cat => `
       <div>
         <label class="filter-option">
           <input type="checkbox" name="cat" value="${cat.slug}" ${state.cat === cat.slug ? 'checked' : ''}>
-          <label>${cat.name_ru}</label>
+          <label>${n(cat)}</label>
           <span class="count">${cat.children?.length || ''}</span>
         </label>
         ${cat.children?.map(child => `
           <label class="filter-option" style="padding-left:16px">
             <input type="checkbox" name="cat" value="${child.slug}" ${state.cat === child.slug ? 'checked' : ''}>
-            <label style="font-size:0.82rem">${child.name_ru}</label>
+            <label style="font-size:0.82rem">${n(child)}</label>
           </label>`).join('') || ''}
       </div>`).join('');
 
@@ -235,8 +237,8 @@
     if (state.cat) {
       const found = cats.flatMap(c => [c, ...(c.children || [])]).find(c => c.slug === state.cat);
       if (found) {
-        document.getElementById('catalog-title').textContent = found.name_ru;
-        document.getElementById('cat-breadcrumb').textContent = found.name_ru;
+        document.getElementById('catalog-title').textContent = n(found);
+        document.getElementById('cat-breadcrumb').textContent = n(found);
       }
     }
   }
@@ -298,6 +300,12 @@
   }
 
   window.changePage = (p) => { currentPage = p; loadProducts(); window.scrollTo(0,0); };
+
+  // Re-render on language change
+  window.addEventListener('langchange', () => {
+    loadCategories();
+    loadProducts();
+  });
 
   loadCategories();
   loadProducts();

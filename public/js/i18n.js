@@ -176,6 +176,7 @@ export function setLang(lang) {
   document.documentElement.lang = lang;
   applyTranslations();
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  window.dispatchEvent(new CustomEvent('langchange', { detail: lang }));
 }
 export function applyTranslations() {
   document.querySelectorAll('[data-i18n]').forEach(el => {
