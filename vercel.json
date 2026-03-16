@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "builds": [{ "src": "server.js", "use": "@vercel/node" }],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/server.js" },
+    { "src": "/admin/(.*)", "dest": "/public/admin/$1" },
+    { "src": "/(catalog|cart|checkout|login|register|account|wholesale|delivery|contacts|about|order-success)(.*)", "dest": "/server.js" },
+    { "src": "/(.*)", "dest": "/public/$1" }
+  ]
+}

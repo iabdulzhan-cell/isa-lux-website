@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Каталог — ISA LUX</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    body { padding-top: var(--header-h); }
+    .catalog-hero {
+      background: var(--black); padding: 48px 0 32px;
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+    .catalog-hero h1 { color: var(--white); font-size: 2rem; margin-bottom: 8px; }
+    .catalog-hero p { color: rgba(255,255,255,0.5); font-size: 0.9rem; }
+    .catalog-top {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; margin-bottom: 24px; flex-wrap: wrap;
+    }
+    .results-count { font-size: 0.88rem; color: var(--gray-600); }
+    .sort-select {
+      padding: 8px 16px; border: 1.5px solid var(--gray-200); border-radius: var(--radius-md);
+      font-size: 0.88rem; background: var(--white); cursor: pointer;
+    }
+    .search-bar {
+      display: flex; gap: 12px; margin-bottom: 24px;
+    }
+    .search-input {
+      flex: 1; padding: 13px 16px; border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius-md); font-size: 0.9rem;
+      transition: var(--transition);
+    }
+    .search-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.1); }
+    .btn-filter-mobile {
+      display: none; padding: 12px 20px; background: var(--black); color: var(--white);
+      border-radius: var(--radius-md); font-size: 0.85rem; font-weight: 600;
+    }
+    @media(max-width:768px) {
+      .btn-filter-mobile { display: flex; align-items: center; gap: 8px; }
+      .filters-panel { display: none; }
+      .filters-panel.open { display: block; }
+    }
+    .active-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .filter-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--gray-100); border-radius: 50px; padding: 4px 12px;
+      font-size: 0.78rem; font-weight: 600;
+    }
+    .filter-tag-remove { cursor: pointer; color: var(--gray-400); }
+    .filter-tag-remove:hover { color: var(--error); }
+    .no-products { grid-column: 1/-1; text-align: center; padding: 80px 24px; }
+  </style>
+</head>
+<body>
+<div id="header-placeholder"></div>
+
+<!-- Catalog Hero -->
+<div class="catalog-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Главная</a>
+      <span>›</span>
+      <span class="current" id="cat-breadcrumb">Каталог</span>
+    </div>
+    <h1 id="catalog-title">Все товары</h1>
+    <p id="catalog-desc">Профессиональные средства для уборки, расходники и инвентарь</p>
+  </div>
+</div>
+
+<section style="padding:40px 0 80px">
+  <div class="container">
+    <!-- Search -->
+    <div class="search-bar">
+      <input type="text" class="search-input" id="search-input" placeholder="Поиск товаров..." data-i18n="search_placeholder">
+      <button class="btn btn-black" id="search-btn">🔍 Найти</button>
+      <button class="btn-filter-mobile" id="filter-toggle">⚙️ Фильтры</button>
+    </div>
+
+    <div class="catalog-layout">
+      <!-- Filters -->
+      <aside class="filters-panel" id="filters-panel">
+        <div class="filter-section">
+          <div class="filter-title">Категории</div>
+          <div id="cat-filters"></div>
+        </div>
+        <div class="filter-section">
+          <div class="filter-title">Цена, ₸</div>
+          <div class="price-range">
+            <div class="price-inputs">
+              <input type="number" class="price-input" id="price-from" placeholder="От">
+              <span style="color:var(--gray-400)">—</span>
+              <input type="number" class="price-input" id="price-to" placeholder="До">
+            </div>
+            <button class="btn btn-outline btn-sm btn-full" id="apply-price">Применить</button>
+          </div>
+        </div>
+        <div class="filter-section">
+          <div class="filter-title">Бренд</div>
+          <div id="brand-filters">
+            <label class="filter-option">
+              <input type="checkbox" name="brand" value="isa-lux"> <label>ISA LUX</label>
+            </label>
+            <label class="filter-option">
+              <input type="checkbox" name="brand" value="chinese"> <label>Chinese Brand</label>
+            </label>
+          </div>
+        </div>
+        <div class="filter-section">
+          <div class="filter-title">Наличие</div>
+          <label class="filter-option">
+            <input type="checkbox" id="in-stock"> <label>Только в наличии</label>
+          </label>
+        </div>
+        <button class="btn btn-outline btn-sm btn-full" id="reset-filters" style="margin-top:8px">
+          Сбросить фильтры
+        </button>
+      </aside>
+
+      <!-- Products -->
+      <div>
+        <div class="catalog-top">
+          <div class="results-count" id="results-count">Загрузка...</div>
+          <select class="sort-select" id="sort-select">
+            <option value="created_at">Новые</option>
+            <option value="price_asc">Цена: по возрастанию</option>
+            <option value="price_desc">Цена: по убыванию</option>
+          </select>
+        </div>
+        <div class="active-filters" id="active-filters"></div>
+        <div class="products-grid" id="products-grid">
+          ${Array(8).fill(0).map(() => `
+            <div class="product-card">
+              <div class="product-card-img skeleton" style="height:200px"></div>
+              <div class="product-card-body">
+                <div class="skeleton" style="height:12px;width:60%;margin-bottom:8px"></div>
+                <div class="skeleton" style="height:16px;margin-bottom:12px"></div>
+                <div class="skeleton" style="height:20px;width:50%"></div>
+              </div>
+            </div>`).join('')}
+        </div>
+        <div class="pagination" id="pagination"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<div id="toast-container"></div>
+
+<script type="module">
+  import { initPage, api, renderProductCard, formatPrice, toast } from '/js/app.js';
+  import '/js/i18n.js';
+
+  await initPage();
+
+  const params = new URLSearchParams(window.location.search);
+  let currentPage = 1;
+  const LIMIT = 16;
+  let state = {
+    cat: params.get('cat') || '',
+    search: params.get('search') || '',
+    sort: 'created_at',
+    priceFrom: '', priceTo: '',
+    brands: []
+  };
+
+  // Init search
+  const searchInput = document.getElementById('search-input');
+  searchInput.value = state.search;
+  document.getElementById('search-btn').addEventListener('click', () => {
+    state.search = searchInput.value.trim();
+    currentPage = 1;
+    loadProducts();
+  });
+  searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('search-btn').click(); });
+
+  // Sort
+  document.getElementById('sort-select').addEventListener('change', e => {
+    state.sort = e.target.value;
+    loadProducts();
+  });
+
+  // Price filter
+  document.getElementById('apply-price').addEventListener('click', () => {
+    state.priceFrom = document.getElementById('price-from').value;
+    state.priceTo = document.getElementById('price-to').value;
+    currentPage = 1;
+    loadProducts();
+  });
+
+  // Filter toggle mobile
+  document.getElementById('filter-toggle')?.addEventListener('click', () => {
+    document.getElementById('filters-panel').classList.toggle('open');
+  });
+
+  // Reset filters
+  document.getElementById('reset-filters').addEventListener('click', () => {
+    state = { cat: '', search: '', sort: 'created_at', priceFrom: '', priceTo: '', brands: [] };
+    searchInput.value = '';
+    document.getElementById('price-from').value = '';
+    document.getElementById('price-to').value = '';
+    document.querySelectorAll('#cat-filters input, #brand-filters input').forEach(i => i.checked = false);
+    currentPage = 1;
+    loadProducts();
+  });
+
+  // Load categories
+  async function loadCategories() {
+    const cats = await api('GET', '/api/categories');
+    const container = document.getElementById('cat-filters');
+    container.innerHTML = cats.map(cat => `
+      <div>
+        <label class="filter-option">
+          <input type="checkbox" name="cat" value="${cat.slug}" ${state.cat === cat.slug ? 'checked' : ''}>
+          <label>${cat.name_ru}</label>
+          <span class="count">${cat.children?.length || ''}</span>
+        </label>
+        ${cat.children?.map(child => `
+          <label class="filter-option" style="padding-left:16px">
+            <input type="checkbox" name="cat" value="${child.slug}" ${state.cat === child.slug ? 'checked' : ''}>
+            <label style="font-size:0.82rem">${child.name_ru}</label>
+          </label>`).join('') || ''}
+      </div>`).join('');
+
+    container.querySelectorAll('input[name="cat"]').forEach(input => {
+      input.addEventListener('change', () => {
+        const checked = container.querySelector('input[name="cat"]:checked');
+        state.cat = checked?.value || '';
+        currentPage = 1;
+        loadProducts();
+      });
+    });
+
+    // Set title from cat
+    if (state.cat) {
+      const found = cats.flatMap(c => [c, ...(c.children || [])]).find(c => c.slug === state.cat);
+      if (found) {
+        document.getElementById('catalog-title').textContent = found.name_ru;
+        document.getElementById('cat-breadcrumb').textContent = found.name_ru;
+      }
+    }
+  }
+
+  // Load products
+  async function loadProducts() {
+    const grid = document.getElementById('products-grid');
+    grid.innerHTML = Array(8).fill(0).map(() => `
+      <div class="product-card">
+        <div class="product-card-img skeleton" style="height:200px"></div>
+        <div class="product-card-body">
+          <div class="skeleton" style="height:12px;width:60%;margin-bottom:8px"></div>
+          <div class="skeleton" style="height:16px;margin-bottom:12px"></div>
+          <div class="skeleton" style="height:20px;width:50%"></div>
+        </div>
+      </div>`).join('');
+
+    const qp = new URLSearchParams();
+    if (state.cat) qp.set('category', state.cat);
+    if (state.search) qp.set('search', state.search);
+    if (state.sort) qp.set('sort', state.sort);
+    qp.set('limit', LIMIT);
+    qp.set('page', currentPage);
+
+    try {
+      const { products, total } = await api('GET', `/api/products?${qp}`);
+      const lang = window.i18n?.getLang() || 'ru';
+
+      document.getElementById('results-count').textContent = `Найдено: ${total || 0} товаров`;
+
+      if (!products?.length) {
+        grid.innerHTML = `
+          <div class="no-products">
+            <div style="font-size:3rem;margin-bottom:16px">🔍</div>
+            <h3>Товары не найдены</h3>
+            <p style="margin-top:8px">Попробуйте изменить фильтры или поисковый запрос</p>
+          </div>`;
+        document.getElementById('pagination').innerHTML = '';
+        return;
+      }
+
+      grid.innerHTML = products.map(p => renderProductCard(p, lang)).join('');
+      renderPagination(total);
+    } catch (e) {
+      grid.innerHTML = `<div class="no-products"><p>Ошибка загрузки: ${e.message}</p></div>`;
+    }
+  }
+
+  function renderPagination(total) {
+    const pages = Math.ceil(total / LIMIT);
+    if (pages <= 1) { document.getElementById('pagination').innerHTML = ''; return; }
+    let html = '';
+    if (currentPage > 1) html += `<button class="page-btn" onclick="changePage(${currentPage-1})">←</button>`;
+    for (let i = Math.max(1,currentPage-2); i <= Math.min(pages,currentPage+2); i++) {
+      html += `<button class="page-btn ${i===currentPage?'active':''}" onclick="changePage(${i})">${i}</button>`;
+    }
+    if (currentPage < pages) html += `<button class="page-btn" onclick="changePage(${currentPage+1})">→</button>`;
+    document.getElementById('pagination').innerHTML = html;
+  }
+
+  window.changePage = (p) => { currentPage = p; loadProducts(); window.scrollTo(0,0); };
+
+  loadCategories();
+  loadProducts();
+</script>
+</body>
+</html>

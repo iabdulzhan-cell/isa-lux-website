@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Оформление заказа — ISA LUX</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    body { padding-top: var(--header-h); }
+    .page-hero { background: var(--black); padding: 40px 0 28px; border-bottom: 1px solid rgba(201,168,76,0.15); }
+    .page-hero h1 { color: var(--white); font-size: 1.75rem; }
+    .checkout-section { padding: 48px 0 80px; }
+    .checkout-layout { display: grid; grid-template-columns: 1fr 380px; gap: 40px; align-items: start; }
+    .payment-methods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .pay-option { border: 1.5px solid var(--gray-200); border-radius: var(--radius-md); padding: 14px; cursor: pointer; text-align: center; transition: var(--transition); }
+    .pay-option:has(input:checked) { border-color: var(--gold); background: rgba(201,168,76,0.05); }
+    .pay-option input { position: absolute; opacity: 0; }
+    .pay-option label { cursor: pointer; font-size: 0.82rem; font-weight: 600; display: block; }
+    .pay-option .pay-icon { font-size: 1.5rem; display: block; margin-bottom: 6px; }
+    .delivery-type-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .delivery-tab { padding: 8px 16px; border: 1.5px solid var(--gray-200); border-radius: var(--radius-md); font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: var(--transition); }
+    .delivery-tab.active { border-color: var(--gold); background: rgba(201,168,76,0.08); color: var(--gold-dark); }
+    .checkout-summary { background: var(--off-white); border-radius: var(--radius-lg); padding: 32px; border: 1px solid var(--gray-200); position: sticky; top: 96px; }
+    .summary-items { max-height: 300px; overflow-y: auto; margin-bottom: 20px; }
+    .summary-item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--gray-200); font-size: 0.85rem; }
+    .summary-item img { width: 48px; height: 48px; border-radius: 6px; object-fit: cover; background: var(--gray-100); flex-shrink: 0; }
+    .step-title { font-size: 1rem; font-weight: 700; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; gap: 12px; }
+    .step-num { width: 28px; height: 28px; border-radius: 50%; background: var(--black); color: var(--gold); font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    @media(max-width:768px) { .checkout-layout { grid-template-columns: 1fr; } .payment-methods { grid-template-columns: repeat(2,1fr); } }
+  </style>
+</head>
+<body>
+<div id="header-placeholder"></div>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Главная</a> <span>›</span>
+      <a href="/cart">Корзина</a> <span>›</span>
+      <span class="current">Оформление заказа</span>
+    </div>
+    <h1>Оформление заказа</h1>
+  </div>
+</div>
+
+<section class="checkout-section">
+  <div class="container">
+    <div class="checkout-layout">
+      <div>
+        <!-- Contact -->
+        <div style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:32px;margin-bottom:24px">
+          <div class="step-title"><span class="step-num">1</span>Контактные данные</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Имя *</label>
+              <input type="text" class="form-input" id="c-name" placeholder="Ваше имя" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Телефон *</label>
+              <input type="tel" class="form-input" id="c-phone" placeholder="+7 777 000 00 00" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" id="c-email" placeholder="для подтверждения заказа">
+          </div>
+        </div>
+
+        <!-- Delivery -->
+        <div style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:32px;margin-bottom:24px">
+          <div class="step-title"><span class="step-num">2</span>Способ доставки</div>
+          <div class="delivery-type-btns">
+            <button class="delivery-tab active" data-type="almaty">🏙️ По Алматы</button>
+            <button class="delivery-tab" data-type="region">🗺️ По Казахстану</button>
+            <button class="delivery-tab" data-type="pickup">🏪 Самовывоз</button>
+          </div>
+
+          <div id="delivery-almaty">
+            <div class="form-group">
+              <label class="form-label">Способ доставки по Алматы</label>
+              <select class="form-select" id="almaty-service">
+                <option value="almaty_own">Наш курьер (1 500 ₸)</option>
+                <option value="almaty_yandex">Яндекс Доставка (по тарифу)</option>
+                <option value="almaty_glovo">Glovo (по тарифу)</option>
+                <option value="almaty_wolt">Wolt (по тарифу)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Адрес доставки *</label>
+              <input type="text" class="form-input" id="almaty-address" placeholder="ул. Абая 10, кв. 5">
+            </div>
+          </div>
+
+          <div id="delivery-region" style="display:none">
+            <div class="form-group">
+              <label class="form-label">Логистическая компания</label>
+              <select class="form-select" id="region-service">
+                <option value="region_cdek">СДЭК</option>
+                <option value="region_almex">Almex</option>
+                <option value="region_pony">Pony Express</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Город *</label>
+                <input type="text" class="form-input" id="region-city" placeholder="Нур-Султан, Шымкент...">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Адрес / Отделение</label>
+                <input type="text" class="form-input" id="region-address" placeholder="Отделение или адрес">
+              </div>
+            </div>
+          </div>
+
+          <div id="delivery-pickup" style="display:none">
+            <div style="background:var(--off-white);border-radius:var(--radius-md);padding:20px">
+              <p style="font-size:0.88rem"><strong>Адрес склада:</strong> г. Алматы, ул. Алтынсарина</p>
+              <p style="font-size:0.85rem;color:var(--gray-600);margin-top:8px">Режим работы: Пн-Сб, 9:00-18:00</p>
+              <p style="font-size:0.85rem;color:var(--success);margin-top:8px;font-weight:600">✓ Бесплатно</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment -->
+        <div style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:32px;margin-bottom:24px">
+          <div class="step-title"><span class="step-num">3</span>Способ оплаты</div>
+          <div class="payment-methods">
+            <div class="pay-option">
+              <input type="radio" name="payment" id="pay-kaspi" value="kaspi" checked>
+              <label for="pay-kaspi"><span class="pay-icon">💳</span>Kaspi Pay</label>
+            </div>
+            <div class="pay-option">
+              <input type="radio" name="payment" id="pay-halyk" value="halyk">
+              <label for="pay-halyk"><span class="pay-icon">🏦</span>Halyk Bank</label>
+            </div>
+            <div class="pay-option">
+              <input type="radio" name="payment" id="pay-forte" value="forte">
+              <label for="pay-forte"><span class="pay-icon">💰</span>Forte Bank</label>
+            </div>
+            <div class="pay-option">
+              <input type="radio" name="payment" id="pay-epay" value="epay">
+              <label for="pay-epay"><span class="pay-icon">💳</span>ePay</label>
+            </div>
+            <div class="pay-option">
+              <input type="radio" name="payment" id="pay-transfer" value="transfer">
+              <label for="pay-transfer"><span class="pay-icon">📄</span>Перевод</label>
+            </div>
+            <div class="pay-option">
+              <input type="radio" name="payment" id="pay-cash" value="cash">
+              <label for="pay-cash"><span class="pay-icon">💵</span>Наличными</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notes -->
+        <div style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:32px">
+          <div class="step-title"><span class="step-num">4</span>Комментарий к заказу</div>
+          <div class="form-group" style="margin-bottom:0">
+            <textarea class="form-textarea" id="c-notes" placeholder="Особые пожелания, удобное время доставки..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="checkout-summary">
+        <h3 style="margin-bottom:20px">Ваш заказ</h3>
+        <div class="summary-items" id="summary-items">
+          <div style="text-align:center;padding:20px"><div class="spinner"></div></div>
+        </div>
+        <div class="summary-row"><span>Товары:</span><span id="sum-subtotal">—</span></div>
+        <div class="summary-row"><span>Доставка:</span><span id="sum-delivery">—</span></div>
+        <div class="summary-divider"></div>
+        <div class="summary-row total"><span>Итого:</span><span id="sum-total" style="color:var(--gold)">—</span></div>
+        <div id="error-msg" style="display:none;background:#fff0f0;border:1px solid #fcc;color:var(--error);padding:12px;border-radius:var(--radius-md);font-size:0.85rem;margin-top:16px"></div>
+        <button class="btn btn-gold btn-full" style="margin-top:20px" id="place-order-btn">
+          ✓ Оформить заказ
+        </button>
+        <p style="font-size:0.75rem;color:var(--gray-400);text-align:center;margin-top:12px">
+          Нажимая кнопку, вы соглашаетесь с условиями <a href="/privacy" style="color:var(--gold)">политики конфиденциальности</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<div id="toast-container"></div>
+
+<script type="module">
+  import { initPage, api, formatPrice, toast, getUser } from '/js/app.js';
+  import '/js/i18n.js';
+
+  await initPage();
+
+  let cartItems = [];
+  let subtotal = 0;
+  let deliveryCost = Number(sessionStorage.getItem('cart_delivery_cost') || 0);
+
+  // Load cart
+  async function loadCart() {
+    cartItems = await api('GET', '/api/cart');
+    if (!cartItems.length) { window.location.href = '/cart'; return; }
+
+    const lang = window.i18n?.getLang() || 'ru';
+    document.getElementById('summary-items').innerHTML = cartItems.map(item => {
+      const p = item.products;
+      const name = p?.[`name_${lang}`] || p?.name_ru || '—';
+      const price = item.price || p?.retail_price || 0;
+      return `
+        <div class="summary-item">
+          ${p?.images?.[0] ? `<img src="${p.images[0]}" alt="${name}">` : '<div style="width:48px;height:48px;background:var(--gray-100);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">🧴</div>'}
+          <div style="flex:1">
+            <div style="font-weight:600;line-height:1.3">${name}</div>
+            <div style="color:var(--gray-400);font-size:0.78rem">× ${item.qty}</div>
+          </div>
+          <div style="font-weight:700;white-space:nowrap">${formatPrice(price * item.qty)}</div>
+        </div>`;
+    }).join('');
+
+    subtotal = cartItems.reduce((s, i) => s + (i.price || i.products?.retail_price || 0) * i.qty, 0);
+    updateSummary();
+  }
+
+  // Pre-fill user data
+  const user = await getUser();
+  if (user) {
+    document.getElementById('c-name').value = user.name || '';
+    document.getElementById('c-phone').value = user.phone || '';
+    document.getElementById('c-email').value = user.email || '';
+  }
+
+  function updateSummary() {
+    document.getElementById('sum-subtotal').textContent = formatPrice(subtotal);
+    document.getElementById('sum-delivery').textContent = deliveryCost === 0 ? 'Бесплатно' : formatPrice(deliveryCost);
+    document.getElementById('sum-total').textContent = formatPrice(subtotal + deliveryCost);
+  }
+
+  // Delivery tabs
+  document.querySelectorAll('.delivery-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.delivery-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      ['almaty','region','pickup'].forEach(t => document.getElementById(`delivery-${t}`).style.display = 'none');
+      document.getElementById(`delivery-${btn.dataset.type}`).style.display = 'block';
+
+      if (btn.dataset.type === 'almaty') deliveryCost = subtotal >= 50000 ? 0 : 1500;
+      else if (btn.dataset.type === 'region') deliveryCost = 3000;
+      else deliveryCost = 0;
+      updateSummary();
+    });
+  });
+
+  // Place order
+  document.getElementById('place-order-btn').addEventListener('click', async () => {
+    const btn = document.getElementById('place-order-btn');
+    const errEl = document.getElementById('error-msg');
+    errEl.style.display = 'none';
+
+    const name = document.getElementById('c-name').value.trim();
+    const phone = document.getElementById('c-phone').value.trim();
+    if (!name || !phone) { errEl.textContent = 'Укажите имя и телефон'; errEl.style.display = 'block'; return; }
+
+    const activeTab = document.querySelector('.delivery-tab.active')?.dataset.type;
+    let delivery_type, delivery_address = '', delivery_city = 'Алматы';
+
+    if (activeTab === 'almaty') {
+      delivery_type = document.getElementById('almaty-service').value;
+      delivery_address = document.getElementById('almaty-address').value;
+    } else if (activeTab === 'region') {
+      delivery_type = document.getElementById('region-service').value;
+      delivery_city = document.getElementById('region-city').value;
+      delivery_address = document.getElementById('region-address').value;
+    } else {
+      delivery_type = 'pickup';
+    }
+
+    const payment_method = document.querySelector('input[name="payment"]:checked')?.value;
+    const items = cartItems.map(i => ({ product_id: i.products?.id || i.product_id, qty: i.qty }));
+
+    btn.disabled = true;
+    btn.textContent = '⏳ Оформляем...';
+
+    try {
+      const result = await api('POST', '/api/orders', {
+        name, phone, email: document.getElementById('c-email').value,
+        delivery_type, delivery_address, delivery_city,
+        payment_method, notes: document.getElementById('c-notes').value,
+        items
+      });
+
+      window.location.href = `/order-success?num=${result.order_number}`;
+    } catch (e) {
+      errEl.textContent = e.message;
+      errEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = '✓ Оформить заказ';
+    }
+  });
+
+  loadCart();
+</script>
+</body>
+</html>

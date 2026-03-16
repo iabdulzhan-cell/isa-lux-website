@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Корзина — ISA LUX</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    body { padding-top: var(--header-h); }
+    .page-hero { background: var(--black); padding: 40px 0 32px; border-bottom: 1px solid rgba(201,168,76,0.15); }
+    .page-hero h1 { color: var(--white); font-size: 1.75rem; }
+    .cart-section { padding: 48px 0 80px; }
+    .promo-input { display: flex; gap: 8px; margin-top: 16px; }
+    .promo-input input { flex: 1; padding: 10px 14px; border: 1.5px solid var(--gray-200); border-radius: var(--radius-md); font-size: 0.88rem; }
+    .promo-input input:focus { border-color: var(--gold); outline: none; }
+    .wholesale-notice {
+      background: linear-gradient(135deg, rgba(201,168,76,0.1), rgba(201,168,76,0.05));
+      border: 1px solid rgba(201,168,76,0.3); border-radius: var(--radius-md);
+      padding: 16px 20px; margin-bottom: 24px; font-size: 0.88rem; color: var(--black);
+    }
+    .wholesale-notice strong { color: var(--gold-dark); }
+    .cart-item-remove { color: var(--gray-400); font-size: 1.1rem; cursor: pointer; transition: var(--transition); padding: 4px; }
+    .cart-item-remove:hover { color: var(--error); }
+    .cart-item-price { font-weight: 700; font-size: 1rem; text-align: right; }
+    .delivery-options { display: flex; flex-direction: column; gap: 8px; margin: 16px 0; }
+    .delivery-option { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 1.5px solid var(--gray-200); border-radius: var(--radius-md); cursor: pointer; transition: var(--transition); }
+    .delivery-option:has(input:checked) { border-color: var(--gold); background: rgba(201,168,76,0.05); }
+    .delivery-option input { accent-color: var(--gold); }
+    .delivery-option label { cursor: pointer; font-size: 0.88rem; flex: 1; }
+    .delivery-price { font-weight: 600; font-size: 0.85rem; color: var(--gold-dark); }
+  </style>
+</head>
+<body>
+<div id="header-placeholder"></div>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Главная</a> <span>›</span>
+      <span class="current">Корзина</span>
+    </div>
+    <h1 data-i18n="cart_title">Корзина</h1>
+  </div>
+</div>
+
+<section class="cart-section">
+  <div class="container">
+    <div id="cart-empty" style="display:none" class="empty-state">
+      <div class="empty-state-icon">🛒</div>
+      <h3 data-i18n="cart_empty">Корзина пуста</h3>
+      <p data-i18n="cart_empty_sub">Добавьте товары из каталога</p>
+      <a href="/catalog" class="btn btn-black" style="margin-top:24px" data-i18n="cart_continue">Продолжить покупки</a>
+    </div>
+
+    <div id="cart-content" class="cart-layout" style="display:none">
+      <!-- Items -->
+      <div>
+        <div id="wholesale-notice" class="wholesale-notice" style="display:none">
+          🏆 <strong>Оптовый клиент:</strong> цены рассчитаны с учётом оптовой скидки.
+          Минимальная сумма заказа: <strong>250 000 ₸</strong>
+        </div>
+        <div id="cart-items"></div>
+        <div style="margin-top:24px;display:flex;justify-content:space-between;align-items:center">
+          <a href="/catalog" class="btn btn-ghost">← Продолжить покупки</a>
+          <button class="btn btn-outline btn-sm" id="clear-cart">🗑️ Очистить корзину</button>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="order-summary">
+        <h3>Ваш заказ</h3>
+        <div class="summary-row">
+          <span>Товары:</span>
+          <span id="sum-items">0 ₸</span>
+        </div>
+        <div class="summary-row">
+          <span>Доставка:</span>
+          <span id="sum-delivery">—</span>
+        </div>
+
+        <!-- Delivery type -->
+        <div style="margin:16px 0">
+          <div style="font-size:0.82rem;font-weight:600;margin-bottom:8px">Способ доставки:</div>
+          <div class="delivery-options">
+            <div class="delivery-option">
+              <input type="radio" name="delivery" id="d-almaty" value="almaty_own">
+              <label for="d-almaty">🏙️ Алматы — курьер</label>
+              <span class="delivery-price">1 500 ₸</span>
+            </div>
+            <div class="delivery-option">
+              <input type="radio" name="delivery" id="d-region" value="region_cdek">
+              <label for="d-region">🗺️ Регионы — СДЭК</label>
+              <span class="delivery-price">3 000 ₸</span>
+            </div>
+            <div class="delivery-option">
+              <input type="radio" name="delivery" id="d-pickup" value="pickup" checked>
+              <label for="d-pickup">🏪 Самовывоз</label>
+              <span class="delivery-price" style="color:var(--success)">Бесплатно</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="summary-divider"></div>
+        <div class="summary-row total">
+          <span>Итого:</span>
+          <span id="sum-total" style="color:var(--gold)">0 ₸</span>
+        </div>
+        <a href="/checkout" class="btn btn-gold btn-full" style="margin-top:20px" id="checkout-btn">
+          Оформить заказ →
+        </a>
+        <div style="margin-top:16px;text-align:center">
+          <img src="/images/payments.svg" alt="Kaspi, Halyk, Forte" style="height:24px;opacity:0.5;margin:0 auto" onerror="this.style.display='none'">
+          <p style="font-size:0.75rem;color:var(--gray-400);margin-top:8px">Kaspi Pay · Halyk · Forte · ePay</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<div id="toast-container"></div>
+
+<script type="module">
+  import { initPage, api, formatPrice, toast, getUser } from '/js/app.js';
+  import '/js/i18n.js';
+
+  await initPage();
+
+  let cartItems = [];
+  let deliveryCost = 0;
+
+  async function loadCart() {
+    try {
+      cartItems = await api('GET', '/api/cart');
+      render();
+    } catch (e) { toast(e.message, 'error'); }
+  }
+
+  function render() {
+    const empty = document.getElementById('cart-empty');
+    const content = document.getElementById('cart-content');
+    const itemsEl = document.getElementById('cart-items');
+
+    if (!cartItems.length) {
+      empty.style.display = 'block';
+      content.style.display = 'none';
+      return;
+    }
+    empty.style.display = 'none';
+    content.style.display = 'grid';
+
+    const lang = window.i18n?.getLang() || 'ru';
+
+    itemsEl.innerHTML = cartItems.map(item => {
+      const p = item.products;
+      const name = p?.[`name_${lang}`] || p?.name_ru || '—';
+      const img = p?.images?.[0];
+      const price = item.price || p?.retail_price || 0;
+      return `
+        <div class="cart-item" data-id="${item.id}">
+          <div class="cart-item-img" style="width:100px;height:100px;border-radius:8px;overflow:hidden;background:var(--gray-100);flex-shrink:0">
+            ${img ? `<img src="${img}" alt="${name}" style="width:100%;height:100%;object-fit:cover">` : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2.5rem">🧴</div>`}
+          </div>
+          <div>
+            <div class="cart-item-brand">${p?.brands?.name || 'ISA LUX'}</div>
+            <div class="cart-item-name">${name}</div>
+            <div class="qty-control">
+              <button class="qty-btn" onclick="updateQty('${item.id}', ${item.qty - 1})">−</button>
+              <span class="qty-num">${item.qty}</span>
+              <button class="qty-btn" onclick="updateQty('${item.id}', ${item.qty + 1})">+</button>
+            </div>
+          </div>
+          <div style="text-align:right">
+            <div class="cart-item-price">${formatPrice(price * item.qty)}</div>
+            <div style="font-size:0.78rem;color:var(--gray-400);margin-top:4px">${formatPrice(price)} / шт</div>
+            <button class="cart-item-remove" onclick="removeItem('${item.id}')" style="margin-top:8px;display:block;margin-left:auto">✕</button>
+          </div>
+        </div>`;
+    }).join('');
+
+    updateTotals();
+  }
+
+  function updateTotals() {
+    const subtotal = cartItems.reduce((s, i) => s + (i.price || i.products?.retail_price || 0) * i.qty, 0);
+    const delivery = document.querySelector('input[name="delivery"]:checked')?.value;
+    deliveryCost = delivery === 'pickup' ? 0 : delivery?.startsWith('almaty') ? 1500 : 3000;
+    // Free delivery above 50k in Almaty
+    if (delivery?.startsWith('almaty') && subtotal >= 50000) deliveryCost = 0;
+
+    document.getElementById('sum-items').textContent = formatPrice(subtotal);
+    document.getElementById('sum-delivery').textContent = deliveryCost === 0 ? 'Бесплатно' : formatPrice(deliveryCost);
+    document.getElementById('sum-total').textContent = formatPrice(subtotal + deliveryCost);
+
+    // Store for checkout
+    sessionStorage.setItem('cart_delivery', delivery || 'pickup');
+    sessionStorage.setItem('cart_delivery_cost', deliveryCost);
+  }
+
+  document.querySelectorAll('input[name="delivery"]').forEach(i => i.addEventListener('change', updateTotals));
+
+  window.updateQty = async (id, qty) => {
+    try {
+      await api('PUT', `/api/cart/${id}`, { qty });
+      cartItems = await api('GET', '/api/cart');
+      render();
+      // Update badge
+      const count = cartItems.reduce((s,i) => s + i.qty, 0);
+      document.querySelectorAll('.cart-badge').forEach(el => { el.textContent = count; el.style.display = count > 0 ? 'flex' : 'none'; });
+    } catch (e) { toast(e.message, 'error'); }
+  };
+
+  window.removeItem = async (id) => {
+    await api('DELETE', `/api/cart/${id}`);
+    cartItems = cartItems.filter(i => i.id !== id);
+    render();
+    const count = cartItems.reduce((s,i) => s + i.qty, 0);
+    document.querySelectorAll('.cart-badge').forEach(el => { el.textContent = count; el.style.display = count > 0 ? 'flex' : 'none'; });
+    toast('Товар удалён', 'info');
+  };
+
+  document.getElementById('clear-cart').addEventListener('click', async () => {
+    if (!confirm('Очистить корзину?')) return;
+    for (const item of cartItems) await api('DELETE', `/api/cart/${item.id}`);
+    cartItems = [];
+    render();
+  });
+
+  // Show wholesale notice if wholesale user
+  const user = await getUser();
+  if (user?.is_approved && ['wholesale','distributor'].includes(user.role)) {
+    document.getElementById('wholesale-notice').style.display = 'block';
+  }
+
+  loadCart();
+</script>
+</body>
+</html>

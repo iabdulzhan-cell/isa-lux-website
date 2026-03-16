@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISA LUX — Премиум средства для уборки | Казахстан</title>
+  <meta name="description" content="ISA LUX — профессиональные средства для уборки в Казахстане. Химия, инвентарь, бумажные расходники для дома, офиса и бизнеса. Опт и розница. Доставка по Алматы и Казахстану.">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="icon" href="/images/favicon.ico">
+  <style>
+    body { padding-top: var(--header-h); }
+
+    /* Hero Section */
+    .hero { padding-top: 0; min-height: calc(100vh - var(--header-h)); }
+
+    /* Ticker after hero */
+    .ticker-wrap { margin: 0; }
+
+    /* About Strip */
+    .about-strip {
+      background: var(--black); color: var(--white);
+      padding: 20px 0;
+    }
+    .about-strip-inner {
+      display: flex; align-items: center; justify-content: center; gap: 48px;
+      flex-wrap: wrap;
+    }
+    .about-strip-item { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; color: rgba(255,255,255,0.7); }
+    .about-strip-item span:first-child { color: var(--gold); font-size: 1.1rem; }
+
+    /* Category section */
+    .cat-section { background: var(--off-white); }
+
+    /* Products section */
+    .products-section { background: var(--white); }
+
+    /* Features section */
+    .features-section { background: var(--off-white); }
+
+    /* Wholesale section */
+    .ws-section { background: var(--white); }
+
+    /* Delivery section */
+    .del-section { background: var(--off-white); }
+
+    /* Brands strip */
+    .brands-strip { padding: 48px 0; border-top: 1px solid var(--gray-200); }
+    .brands-row { display: flex; align-items: center; justify-content: center; gap: 48px; flex-wrap: wrap; }
+    .brand-item { font-family: var(--font-serif); font-size: 1.2rem; color: var(--gray-400); font-weight: 600; letter-spacing: 0.1em; transition: var(--transition); }
+    .brand-item:hover { color: var(--gold); }
+    .brand-item.isa { color: var(--gold-dark); }
+
+    /* CTA section */
+    .cta-section {
+      background: linear-gradient(135deg, var(--black) 0%, var(--black-light) 100%);
+      padding: 80px 0; text-align: center;
+    }
+    .cta-section h2 { color: var(--white); margin-bottom: 16px; }
+    .cta-section p { color: rgba(255,255,255,0.6); margin-bottom: 40px; font-size: 1.05rem; }
+    .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* Animate on scroll */
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<div id="header-placeholder"></div>
+
+<!-- ═══ HERO ═══════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span></span>
+        <span data-i18n="hero_badge">Премиум чистота для вашего бизнеса</span>
+      </div>
+      <h1 data-i18n="hero_title">Чистота — это <em>роскошь</em></h1>
+      <p data-i18n="hero_sub">Профессиональные средства для уборки ISA LUX. Химия, инвентарь и расходники для дома, офиса и бизнеса с доставкой по Казахстану.</p>
+      <div class="hero-actions">
+        <a href="/catalog" class="btn btn-gold btn-lg" data-i18n="hero_btn_catalog">Смотреть каталог</a>
+        <a href="/wholesale" class="btn btn-outline-gold btn-lg" data-i18n="hero_btn_wholesale">Условия опта</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-num" data-i18n="hero_stat1_num">500+</div>
+          <div class="hero-stat-label" data-i18n="hero_stat1_label">Товаров в каталоге</div>
+        </div>
+        <div>
+          <div class="hero-stat-num" data-i18n="hero_stat2_num">50+</div>
+          <div class="hero-stat-label" data-i18n="hero_stat2_label">Брендов</div>
+        </div>
+        <div>
+          <div class="hero-stat-num" data-i18n="hero_stat3_num">1000+</div>
+          <div class="hero-stat-label" data-i18n="hero_stat3_label">Довольных клиентов</div>
+        </div>
+        <div>
+          <div class="hero-stat-num" data-i18n="hero_stat4_num">2</div>
+          <div class="hero-stat-label" data-i18n="hero_stat4_label">Года на рынке</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Decorative mandala watermark -->
+  <div class="hero-visual" aria-hidden="true">
+    <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="200" cy="200" r="120" stroke="#C9A84C" stroke-width="1"/>
+      <circle cx="200" cy="120" r="80" stroke="#C9A84C" stroke-width="0.5"/>
+      <circle cx="200" cy="280" r="80" stroke="#C9A84C" stroke-width="0.5"/>
+      <circle cx="130" cy="160" r="80" stroke="#C9A84C" stroke-width="0.5"/>
+      <circle cx="270" cy="160" r="80" stroke="#C9A84C" stroke-width="0.5"/>
+      <circle cx="130" cy="240" r="80" stroke="#C9A84C" stroke-width="0.5"/>
+      <circle cx="270" cy="240" r="80" stroke="#C9A84C" stroke-width="0.5"/>
+      <circle cx="200" cy="200" r="40" stroke="#C9A84C" stroke-width="1.5"/>
+      <circle cx="200" cy="200" r="10" fill="#C9A84C"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══ TICKER ════════════════════════════════════════════════ -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <div class="ticker-inner" id="ticker">
+      <span class="ticker-item">✦ Средства для уборки</span>
+      <span class="ticker-item">✦ Бумажные расходники</span>
+      <span class="ticker-item">✦ Инвентарь для уборки</span>
+      <span class="ticker-item">✦ Средства гигиены</span>
+      <span class="ticker-item">✦ ISA LUX Brand</span>
+      <span class="ticker-item">✦ Опт от 250 000 ₸</span>
+      <span class="ticker-item">✦ Доставка по Казахстану</span>
+      <span class="ticker-item">✦ Средства для уборки</span>
+      <span class="ticker-item">✦ Бумажные расходники</span>
+      <span class="ticker-item">✦ Инвентарь для уборки</span>
+      <span class="ticker-item">✦ Средства гигиены</span>
+      <span class="ticker-item">✦ ISA LUX Brand</span>
+      <span class="ticker-item">✦ Опт от 250 000 ₸</span>
+      <span class="ticker-item">✦ Доставка по Казахстану</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ABOUT STRIP ══════════════════════════════════════════ -->
+<div class="about-strip">
+  <div class="container">
+    <div class="about-strip-inner">
+      <div class="about-strip-item"><span>🚚</span><span>Доставка по Алматы за 2 часа</span></div>
+      <div class="about-strip-item"><span>✦</span><span>Оптовые цены от 250 000 ₸</span></div>
+      <div class="about-strip-item"><span>🏆</span><span>Сертифицированная продукция</span></div>
+      <div class="about-strip-item"><span>📦</span><span>Доставка по всему Казахстану</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CATEGORIES ════════════════════════════════════════════ -->
+<section class="section cat-section">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="label" data-i18n="cat_label">Ассортимент</div>
+      <h2 data-i18n="cat_title">Категории товаров</h2>
+      <span class="gold-line gold-line-center" style="margin-top:16px"></span>
+    </div>
+    <div class="categories-grid">
+      <a href="/catalog?cat=cleaning-chemicals" class="category-card fade-up">
+        <span class="category-icon">🧴</span>
+        <h3>Химия для уборки</h3>
+        <p>Средства для пола, туалета, стекол, кухни и дезинфекции</p>
+        <div class="category-count">8 подкатегорий →</div>
+      </a>
+      <a href="/catalog?cat=paper-supplies" class="category-card fade-up">
+        <span class="category-icon">🧻</span>
+        <h3>Бумажные расходники</h3>
+        <p>Туалетная бумага, полотенца, салфетки, мешки для мусора</p>
+        <div class="category-count">5 подкатегорий →</div>
+      </a>
+      <a href="/catalog?cat=cleaning-inventory" class="category-card fade-up">
+        <span class="category-icon">🧹</span>
+        <h3>Инвентарь для уборки</h3>
+        <p>Швабры, ведра, щетки, тележки, пылесосы и перчатки</p>
+        <div class="category-count">8 подкатегорий →</div>
+      </a>
+      <a href="/catalog?cat=hygiene-products" class="category-card fade-up">
+        <span class="category-icon">🧼</span>
+        <h3>Средства гигиены</h3>
+        <p>Жидкое мыло, антисептики, диспенсеры, освежители</p>
+        <div class="category-count">4 подкатегории →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FEATURED PRODUCTS ════════════════════════════════════ -->
+<section class="section products-section">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="label" data-i18n="prod_label">Популярные товары</div>
+      <h2 data-i18n="prod_title">Хиты продаж</h2>
+      <p data-i18n="prod_sub">Самые востребованные товары для уборки и гигиены</p>
+      <span class="gold-line gold-line-center" style="margin-top:16px"></span>
+    </div>
+    <div class="products-grid" id="featured-products">
+      <!-- Skeletons -->
+      ${Array(8).fill(0).map(() => `
+        <div class="product-card">
+          <div class="product-card-img skeleton" style="height:240px"></div>
+          <div class="product-card-body">
+            <div class="skeleton" style="height:12px;width:60%;margin-bottom:8px"></div>
+            <div class="skeleton" style="height:16px;width:90%;margin-bottom:12px"></div>
+            <div class="skeleton" style="height:20px;width:50%"></div>
+          </div>
+        </div>`).join('')}
+    </div>
+    <div style="text-align:center;margin-top:48px">
+      <a href="/catalog" class="btn btn-black btn-lg" data-i18n="btn_view_all">Смотреть все</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FEATURES ═════════════════════════════════════════════ -->
+<section class="section features-section">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="label" data-i18n="feat_label">Почему ISA LUX</div>
+      <h2>Качество, которому доверяют</h2>
+      <span class="gold-line gold-line-center" style="margin-top:16px"></span>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card fade-up">
+        <div class="feature-icon">🏭</div>
+        <h3 data-i18n="feat_1_title">Прямые поставки</h3>
+        <p data-i18n="feat_1_text">Работаем напрямую с производителями Китая. Никаких посредников — только свежий товар по честным ценам.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">🚚</div>
+        <h3 data-i18n="feat_2_title">Быстрая доставка</h3>
+        <p data-i18n="feat_2_text">По Алматы доставляем за 1-2 часа через Яндекс, Glovo, Wolt. По Казахстану — через логистических партнёров.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">💰</div>
+        <h3 data-i18n="feat_3_title">Оптовые цены</h3>
+        <p data-i18n="feat_3_text">Специальные цены для бизнеса. Минимальный заказ от 250 000 ₸. Индивидуальные условия для дистрибьюторов.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">🏅</div>
+        <h3 data-i18n="feat_4_title">Сертифицированная продукция</h3>
+        <p data-i18n="feat_4_text">Все товары сертифицированы и прошли контроль качества. Работаем официально с НДС.</p>
+      </div>
+      <div class="feature-card fade-up" style="border-color:var(--gold-light)">
+        <div class="feature-icon" style="background:linear-gradient(135deg,#C9A84C,#a07830)">⭐</div>
+        <h3 data-i18n="feat_5_title">Собственный бренд ISA LUX</h3>
+        <p data-i18n="feat_5_text">Продукция под брендом ISA LUX производится по нашим стандартам качества на лучших заводах Китая.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">💬</div>
+        <h3 data-i18n="feat_6_title">Поддержка 24/7</h3>
+        <p data-i18n="feat_6_text">Менеджеры всегда на связи. Telegram, WhatsApp, телефон. Решим любой вопрос быстро.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHOLESALE BANNER ══════════════════════════════════════ -->
+<section class="section ws-section">
+  <div class="container">
+    <div class="wholesale-banner fade-up">
+      <div>
+        <div class="label" style="margin-bottom:12px" data-i18n="ws_label">Для бизнеса</div>
+        <h2 data-i18n="ws_title">Станьте оптовым партнёром ISA LUX</h2>
+        <p data-i18n="ws_sub">Специальные условия для магазинов, отелей, ресторанов и компаний по уборке. Минимальный заказ от 250 000 ₸.</p>
+        <div class="wholesale-stats">
+          <div>
+            <div class="ws-stat-num" data-i18n="ws_stat1_num">−30%</div>
+            <div class="ws-stat-label" data-i18n="ws_stat1_label">Ниже розничной цены</div>
+          </div>
+          <div>
+            <div class="ws-stat-num" data-i18n="ws_stat2_num">250K</div>
+            <div class="ws-stat-label" data-i18n="ws_stat2_label">Минимальный заказ ₸</div>
+          </div>
+          <div>
+            <div class="ws-stat-num" data-i18n="ws_stat3_num">1-3</div>
+            <div class="ws-stat-label" data-i18n="ws_stat3_label">Дня доставки</div>
+          </div>
+        </div>
+      </div>
+      <div style="position:relative;z-index:1">
+        <a href="/register?role=wholesale" class="btn btn-gold btn-lg" data-i18n="ws_btn">Зарегистрироваться как оптовик</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DELIVERY ══════════════════════════════════════════════ -->
+<section class="section del-section">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="label" data-i18n="del_label">Доставка</div>
+      <h2 data-i18n="del_title">Быстро и надёжно</h2>
+      <span class="gold-line gold-line-center" style="margin-top:16px"></span>
+    </div>
+    <div class="delivery-grid">
+      <div class="delivery-card fade-up">
+        <div class="delivery-icon">🏙️</div>
+        <div>
+          <h4 data-i18n="del_1_title">По Алматы</h4>
+          <p data-i18n="del_1_text">Яндекс Доставка, Glovo, Wolt или наш курьер. 1-4 часа.</p>
+          <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+            <span style="background:var(--gray-100);padding:4px 10px;border-radius:50px;font-size:0.75rem;font-weight:600">Яндекс</span>
+            <span style="background:var(--gray-100);padding:4px 10px;border-radius:50px;font-size:0.75rem;font-weight:600">Glovo</span>
+            <span style="background:var(--gray-100);padding:4px 10px;border-radius:50px;font-size:0.75rem;font-weight:600">Wolt</span>
+          </div>
+        </div>
+      </div>
+      <div class="delivery-card fade-up">
+        <div class="delivery-icon">🗺️</div>
+        <div>
+          <h4 data-i18n="del_2_title">По Казахстану</h4>
+          <p data-i18n="del_2_text">СДЭК, Almex, Pony Express. 1-5 дней в зависимости от города.</p>
+          <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+            <span style="background:var(--gray-100);padding:4px 10px;border-radius:50px;font-size:0.75rem;font-weight:600">СДЭК</span>
+            <span style="background:var(--gray-100);padding:4px 10px;border-radius:50px;font-size:0.75rem;font-weight:600">Almex</span>
+            <span style="background:var(--gray-100);padding:4px 10px;border-radius:50px;font-size:0.75rem;font-weight:600">Pony Express</span>
+          </div>
+        </div>
+      </div>
+      <div class="delivery-card fade-up">
+        <div class="delivery-icon">🏪</div>
+        <div>
+          <h4 data-i18n="del_3_title">Самовывоз</h4>
+          <p data-i18n="del_3_text">Бесплатно. Алматы, ул. Алтынсарина. Пн-Сб 9:00-18:00.</p>
+        </div>
+      </div>
+      <div class="delivery-card fade-up" style="border-color:var(--gold-light);background:linear-gradient(135deg,rgba(201,168,76,0.05),transparent)">
+        <div class="delivery-icon">🎁</div>
+        <div>
+          <h4 style="color:var(--gold)" data-i18n="del_4_title">Бесплатная доставка</h4>
+          <p data-i18n="del_4_text">При заказе от 50 000 ₸ по Алматы доставка бесплатно.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BRANDS ════════════════════════════════════════════════ -->
+<div class="brands-strip">
+  <div class="container">
+    <div style="text-align:center;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gray-400);margin-bottom:32px">Наши бренды и партнёры</div>
+    <div class="brands-row">
+      <div class="brand-item isa">ISA LUX</div>
+      <div class="brand-item">CLEAN PRO</div>
+      <div class="brand-item">FRESH</div>
+      <div class="brand-item">PURE MAX</div>
+      <div class="brand-item">BIO CLEAN</div>
+      <div class="brand-item">ECO STAR</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CTA ═══════════════════════════════════════════════════ -->
+<section class="cta-section">
+  <div class="container">
+    <div class="section-header fade-up">
+      <h2>Готовы начать? <em style="color:var(--gold)">Сделайте заказ</em></h2>
+      <p>Закажите прямо сейчас и получите доставку по Алматы уже сегодня.</p>
+    </div>
+    <div class="cta-actions">
+      <a href="/catalog" class="btn btn-gold btn-lg">Перейти в каталог</a>
+      <a href="/contacts" class="btn btn-outline" style="color:var(--white);border-color:rgba(255,255,255,0.3)">Связаться с нами</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<div id="footer-placeholder"></div>
+
+<!-- Toast container -->
+<div id="toast-container"></div>
+
+<script type="module">
+  import { initPage, api, renderProductCard, formatPrice } from '/js/app.js';
+  import '/js/i18n.js';
+
+  await initPage();
+
+  // Load featured products
+  async function loadFeatured() {
+    try {
+      const { products } = await api('GET', '/api/products?featured=true&limit=8');
+      const grid = document.getElementById('featured-products');
+      if (!products?.length) {
+        grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📦</div><h3>Скоро добавим товары</h3></div>';
+        return;
+      }
+      const lang = window.i18n?.getLang() || 'ru';
+      grid.innerHTML = products.map(p => renderProductCard(p, lang)).join('');
+    } catch (e) {
+      console.error(e);
+    }
+  }
+  loadFeatured();
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
